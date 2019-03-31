@@ -1,0 +1,27 @@
+metadata:
+ version: 3
+ name: cpu problem
+ description: Monasca alarm of host high CPU load affects the instances
+ type: standard
+entities:
+ host_alarm:
+  type: monasca
+  name: high_cpu_load
+ instance:
+  type: nova.instance
+ host:
+  type: nova.host
+scenarios:
+ - condition: host_alarm [ on ] host AND host [ contains ] instance
+   actions:
+     - set_state:
+        state: SUBOPTIMAL
+        target: host
+     - set_state:
+        state: SUBOPTIMAL
+        target: instance
+     - raise_alarm:
+        target: instance
+        alarm_name: CPU performance degradation
+        severity: WARNING
+        causing_alarm: host_alarm
