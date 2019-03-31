@@ -1,0 +1,10 @@
+
+...
+
+# enter machine
+ssh -i id_rsa ubuntu@<my_ip>
+ 
+# enter lab env
+cd lab/
+git clone https://github.com/ifat-afek/monitoring-lab-denver-2019.git
+./run_stack.sh
