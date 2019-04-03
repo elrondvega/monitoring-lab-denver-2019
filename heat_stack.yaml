@@ -44,7 +44,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: server1
-      image: cirros-0.3.6-x86_64-disk
+      image: cirros-0.4.0-x86_64-disk
       flavor: m1.nano
       key_name: { get_resource: keypair }
       security_groups: [ { get_resource: security_group_plus } ]
@@ -55,7 +55,7 @@ resources:
     type: OS::Nova::Server
     properties:
       name: server2
-      image: cirros-0.3.6-x86_64-disk
+      image: cirros-0.4.0-x86_64-disk
       flavor: m1.nano
       key_name: { get_resource: keypair }
       security_groups: [ { get_resource: security_group_plus } ]
