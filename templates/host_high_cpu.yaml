@@ -1,6 +1,6 @@
 metadata:
  version: 3
- name: cpu problem
+ name: high CPU load
  description: Monasca alarm of host high CPU load affects the instances
  type: standard
 entities:
