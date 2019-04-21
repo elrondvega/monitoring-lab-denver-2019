@@ -1,0 +1,24 @@
+metadata:
+ version: 3
+ name: suboptimal instance
+ description: instances with performance degredation affects the Heat stack
+ type: standard
+entities:
+ instance_alarm:
+  type: vitrage
+  name: CPU performance degradation
+ instance:
+  type: nova.instance
+ stack:
+  type: heat.stack
+scenarios:
+ - condition: # if there is an alarm on an instance, and the Heat stack is "comprised" of that instance
+   actions:
+     - set_state: # set the stack state to SUBOPTIMAL
+        state: 
+        target: 
+     - raise_alarm: # raise an alarm on the Heat stack
+        target: 
+        alarm_name: 
+        severity: 
+        causing_alarm:
