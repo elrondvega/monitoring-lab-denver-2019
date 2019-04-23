@@ -1,15 +1,12 @@
 
 ...
 
-# enter machine
+# Enter machine
 chmod 600 denver-2019.pem
 ssh -i denver-2019.pem ubuntu@<my_ip>
- 
-# enter lab env
-git clone https://github.com/ifat-afek/monitoring-lab-denver-2019.git
-cd monitoring-lab-denver-2019
+. ~/devstack/openrc admin admin
 
-# create Monasca high_cpu_load alarm definition (unless exists already)
+# Create Monasca high_cpu_load alarm definition (unless exists already)
 monasca alarm-definition-create high_cpu_load "max(cpu.percent) > 10" --severity MEDIUM
 
 # Add a Vitrage template for high_cpu_load alarm
