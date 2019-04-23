@@ -2,7 +2,8 @@
 ...
 
 # enter machine
-ssh -i id_rsa ubuntu@<my_ip>
+chmod 600 denver-2019.pem
+ssh -i denver-2019.pem ubuntu@<my_ip>
  
 # enter lab env
 git clone https://github.com/ifat-afek/monitoring-lab-denver-2019.git
