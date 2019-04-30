@@ -10,6 +10,11 @@ Ex.1 Get the list of 5 last measurements with the metric name 'process.cpu_perc'
 
 # Monasca Alarm Definitions
 
+Login into Horizon:
+http://<my_ip>
+username: admin
+password: secretadmin
+
 monasca alarm-definition-create alarm_generic "last(metric.one,deterministic, 60) > 10 times 1" --severity MEDIUM
 monasca alarm-definition-create alarm_hostname_host1 "last(metric.two{hostname=host1},deterministic, 60) > 10 times 1" --severity MEDIUM
 monasca alarm-definition-create alarm_generic_match_hostname "last(metric.three,deterministic, 60) > 10 times 1" --severity MEDIUM --match-by hostname
@@ -34,7 +39,7 @@ source /opt/monasca-agent/bin/activate
 pip list
 pip install monasca-agent[libvirt]
 deactivate
-sudo cp libvirt.yaml /etc/monasca/agent/conf.d/libvirt.yaml
+sudo cp monitoring-lab-denver-2019/libvirt.yaml /etc/monasca/agent/conf.d/libvirt.yaml
 sudo systemctl restart monasca-collector.service monasca-forwarder.service
 sudo /opt/monasca-agent/bin/monasca-collector check libvirt
 

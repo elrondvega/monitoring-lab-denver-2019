@@ -1,7 +1,8 @@
 # Open Infrastructure Summit Denver 2019
 ## Monitoring and Analyzing your OpenStack Cloud
-Ifat Afek, Nokia
-Martin Chacon Piza, Fujitsu EST GmbH
+
+- Ifat Afek, Nokia
+- Martin Chacon Piza, Fujitsu EST GmbH
 
 https://www.openstack.org/summit/denver-2019/summit-schedule/events/23316/monitoring-and-analyzing-your-openstack-cloud
 
