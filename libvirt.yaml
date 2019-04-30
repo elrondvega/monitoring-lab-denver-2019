@@ -1,0 +1,26 @@
+init_config:
+  auth_url: http://127.0.0.1/identity
+  cache_dir: /dev/shm
+  customer_metadata:
+  - scale_group
+  disk_collection_period: 0
+  max_ping_concurrency: 8
+  metadata:
+  - scale_group
+  nova_refresh: 14400
+  password: secretservice
+  ping_check: true
+  project_domain_name: Default
+  project_name: service
+  user_domain_name: Default
+  username: nova
+  vm_cpu_check_enable: true
+  vm_disks_check_enable: true
+  vm_extended_disks_check_enable: false
+  vm_network_check_enable: true
+  vm_ping_check_enable: true
+  vm_probation: 300
+  vnic_collection_period: 0
+instances:
+- {}
+

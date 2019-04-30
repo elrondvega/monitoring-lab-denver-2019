@@ -1,12 +1,58 @@
+# Monasca Metric Values
 
-...
-
-# Enter machine
-chmod 600 denver-2019.pem
-ssh -i denver-2019.pem ubuntu@<my_ip>
 . ~/devstack/openrc admin admin
+openstack role assignment list --names --sort-column Project
+monasca metric-name-list
+monasca metric-list --limit 10
+monasca measurement-list cpu.percent -3
 
-# Create Monasca high_cpu_load alarm definition (unless exists already)
+Ex.1 Get the list of 5 last measurements with the metric name 'process.cpu_perc' for service 'kafka' within the last 5 minutes.
+
+# Monasca Alarm Definitions
+
+Login into Horizon:
+http://<my_ip>
+username: admin
+password: secretadmin
+
+monasca alarm-definition-create alarm_generic "last(metric.one,deterministic, 60) > 10 times 1" --severity MEDIUM
+monasca alarm-definition-create alarm_hostname_host1 "last(metric.two{hostname=host1},deterministic, 60) > 10 times 1" --severity MEDIUM
+monasca alarm-definition-create alarm_generic_match_hostname "last(metric.three,deterministic, 60) > 10 times 1" --severity MEDIUM --match-by hostname
+ 
+monasca metric-create --dimensions hostname=host1,service=monitoring metric.one 20.0
+monasca metric-create --dimensions hostname=host1,service=monitoring metric.two 31.0
+monasca metric-create --dimensions hostname=host1,service=monitoring metric.three 24.0
+monasca metric-create --dimensions hostname=host2,service=monitoring metric.one 1.0
+monasca metric-create --dimensions hostname=host2,service=monitoring metric.two 23.0
+monasca metric-create --dimensions hostname=host2,service=monitoring metric.three 25.0
+
+Ex.2 Determine how many Alarms are created and how many with status 'alarm'.
+
+# Monasca Agent Plugins
+
+https://github.com/openstack/monasca-agent/blob/master/docs/Plugins.md
+
+sh run_stack.sh
+openstack stack list
+
+source /opt/monasca-agent/bin/activate
+pip list
+pip install monasca-agent[libvirt]
+deactivate
+sudo cp monitoring-lab-denver-2019/libvirt.yaml /etc/monasca/agent/conf.d/libvirt.yaml
+sudo systemctl restart monasca-collector.service monasca-forwarder.service
+sudo /opt/monasca-agent/bin/monasca-collector check libvirt
+
+monasca metric-name-list
+monasca measurement-list nova.vm.total_count -5
+monasca measurement-list vm.health_status -5
+monasca metric-list --name vm.health_status
+monasca measurement-list vm.health_status -5 --dimensions resource_id=<resource_id>
+
+Ex.3 Set an Alarm Definition which creates independent alarms for each instance not running.
+Ex.4 Set an Alarm Definition which creates a single alarm when at least an instance is not running.
+
+# Vitrage. Create Monasca high_cpu_load alarm definition (unless exists already)
 monasca alarm-definition-create high_cpu_load "max(cpu.percent) > 10" --severity MEDIUM
 
 # Add a Vitrage template for high_cpu_load alarm
