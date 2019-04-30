@@ -1,3 +1,9 @@
+#
+#
+# Monasca Hands-On
+#
+#
+
 # Monasca Metric Values
 
 . ~/devstack/openrc admin admin
@@ -52,20 +58,52 @@ monasca measurement-list vm.health_status -5 --dimensions resource_id=<resource_
 Ex.3 Set an Alarm Definition which creates independent alarms for each instance not running.
 Ex.4 Set an Alarm Definition which creates a single alarm when at least an instance is not running.
 
-# Vitrage. Create Monasca high_cpu_load alarm definition (unless exists already)
+#
+#
+# Vitrage Hands-On
+#
+#
+
+# If not done already:
+. ~/devstack/openrc admin admin
+. ~/monitoring-lab-denver-2019/run_stack.sh
+
+# Create Monasca high_cpu_load alarm definition (unless exists already)
 monasca alarm-definition-create high_cpu_load "max(cpu.percent) > 10" --severity MEDIUM
+
+# Go over Vitrage UI menus
+Topology
+Alarms
+Entity Graph
+
+# Run Vitrage CLI commnads and examine the results
+vitrage topology show
+vitrage resource list
+vitrage resource count
+vitrage resource show <resource UUID>
+
+vitrage alarm list
+vitrage alarm count
 
 # Add a Vitrage template for high_cpu_load alarm
 cd templates
 vitrage template validate --path host_high_cpu.yaml
 vitrage template add --path host_high_cpu.yaml
 
-# Create a Heat stack
-. ~/monitoring-lab-denver-2019/run_stack.sh
+# See the effect in Vitrage UI
+Alarms - click the RCA button for the monasca alarm and then for a vitrage alarm
+Entity Graph
+Templates
 
-# Edit the Vitrage template for suboptimal stack
-vi suboptimal_instance.yaml
-...
-vitrage template validate --path suboptimal_instance.yaml
-vitrage template add --path suboptimal_instance.yaml
+# Edit the Vitrage template for instance high CPU load
+# Fill in the missing parts
+vi instance_high_cpu.yaml
 
+# Validate the template and then add it
+vitrage template validate --path instance_high_cpu.yaml
+vitrage template add --path instance_high_cpu.yaml
+
+# See the effect in Vitrage UI
+Alarms - click the RCA button for the monasca alarm and then for a vitrage alarm
+Entity Graph
+Templates
