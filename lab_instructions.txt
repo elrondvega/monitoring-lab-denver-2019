@@ -64,12 +64,17 @@ Ex.4 Set an Alarm Definition which creates a single alarm when at least an insta
 #
 #
 
-# If not done already:
+#
+# Vitrage preparation - if not done already
+#
+
 . ~/devstack/openrc admin admin
 . ~/monitoring-lab-denver-2019/run_stack.sh
-
-# Create Monasca high_cpu_load alarm definition (unless exists already)
 monasca alarm-definition-create high_cpu_load "max(cpu.percent) > 10" --severity MEDIUM
+
+#
+# Vitrage part 1 - become familiar with Vitrage UI and CLI
+#
 
 # Go over Vitrage UI menus
 Topology
@@ -85,6 +90,10 @@ vitrage resource show <resource UUID>
 vitrage alarm list
 vitrage alarm count
 
+#
+# Vitrage part 2 - add templates
+#
+
 # Add a Vitrage template for high_cpu_load alarm
 cd templates
 vitrage template validate --path host_high_cpu.yaml
@@ -98,6 +107,9 @@ Templates
 # Edit the Vitrage template for instance high CPU load
 # Fill in the missing parts
 vi instance_high_cpu.yaml
+
+# You can find the solution here:
+~/monitoring-lab-denver-2019/template_solutions/instance_high_cpu.yaml 
 
 # Validate the template and then add it
 vitrage template validate --path instance_high_cpu.yaml
