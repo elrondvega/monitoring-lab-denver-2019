@@ -109,7 +109,7 @@ Templates
 vi instance_high_cpu.yaml
 
 # You can find the solution here:
-~/monitoring-lab-denver-2019/template_solutions/instance_high_cpu.yaml 
+# ~/monitoring-lab-denver-2019/template_solutions/instance_high_cpu.yaml 
 
 # Validate the template and then add it
 vitrage template validate --path instance_high_cpu.yaml
@@ -119,3 +119,4 @@ vitrage template add --path instance_high_cpu.yaml
 Alarms - click the RCA button for the monasca alarm and then for a vitrage alarm
 Entity Graph
 Templates
+
